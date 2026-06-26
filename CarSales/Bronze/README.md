@@ -1,32 +1,29 @@
-# Bronze Layer - Raw Data Ingestion
+# Bronze Layer
 
 ## Objective
 
-The Bronze layer is responsible for ingesting raw sales data from GitHub into Azure SQL Database using Azure Data Factory. 
-The data is loaded into landing tables and then moved to Bronze tables using an incremental loading process implemented through a SQL stored procedure.
+Load raw sales data from GitHub into Azure SQL Database and populate the Bronze layer using an incremental loading strategy.
 
-## Workflow
+## Pipeline Flow
 
-GitHub (CSV Files)
-        ↓
-Azure Data Factory (Copy Activity)
-        ↓
-Landing Tables (Azure SQL Database)
-        ↓
-Stored Procedure (Incremental Load)
-        ↓
-Bronze Tables
+1. Source: GitHub CSV files
+2. Azure Data Factory Copy Activity loads data into Azure SQL landing tables.
+3. A stored procedure executes after the copy activity.
+4. The stored procedure inserts only new records into the Bronze tables.
+5. The pipeline completes successfully and is ready for the Silver layer.
 
-## Technologies Used
+## Components
 
-- Azure Data Factory
-- Azure SQL Database
-- GitHub
-- SQL Stored Procedures
+- Linked Service (GitHub/HTTP)
+- Linked Service (Azure SQL Database)
+- Source Dataset
+- Sink Dataset
+- Copy Activity
+- Stored Procedure Activity
 
-## Features
+## Outcome
 
-- Automated data ingestion from GitHub
-- Incremental data loading
-- Duplicate prevention
-- Re-runnable pipeline
+- Raw data successfully ingested.
+- Incremental loading implemented.
+- Duplicate records avoided.
+- Bronze layer populated for downstream transformations.
